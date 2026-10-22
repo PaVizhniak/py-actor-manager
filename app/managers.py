@@ -24,3 +24,11 @@ class ActorManager:
         if actors:
             return [Actor(*actor) for actor in actors]
         return []
+
+    def update(self, pk: int, new_first_name: str, new_last_name: str) -> None:
+        self._connection.execute(
+            f"UPDATE {self.table_name} "
+            "SET pk = ?, first_name = ?, last_name = ? WHERE pk = ?",
+            (pk, new_first_name, new_last_name),
+        )
+        self._connection.commit()
