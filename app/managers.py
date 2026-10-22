@@ -17,10 +17,11 @@ class ActorManager:
         )
         self._connection.commit()
 
-    def all(self) -> [Actor]:
-        list_of_actors = self._connection.execute(
+    def all(self) -> list[Actor]:
+        cursor = self._connection.execute(
             f"SELECT * FROM {self.table_name}"
         )
+        list_of_actors = cursor.fetchall()
         if list_of_actors:
             return [Actor(*actor) for actor in list_of_actors]
         return []
