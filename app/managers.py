@@ -3,4 +3,16 @@ import sqlite3
 from app.models import Actor
 
 
-# add manager here
+class ActorManager:
+    def __init__(self) -> None:
+        self._connection = sqlite3.connect("cinema.db")
+        self.db_name = "cinema.db"
+        self.table_name = "actors"
+
+    def create(self, first_name: str, last_name: str) -> None:
+        self._connection.execute(
+            f"INSERT INTO {self.table_name} "
+            "(first_name, last_name) VALUES (?, ?)",
+            (first_name, last_name),
+        )
+        self._connection.commit()
